@@ -16,7 +16,8 @@ const dbName    = "express-inprodi"
 const host      = "cluster0.8iuft.mongodb.net"
 
 // mongodb+srv://mongo-express-inprodi-admin:<password>${password}/<dbname>?retryWrites=true&w=majority
-const uri = `mongodb+srv://${usuario}:${password}@${host}/${dbName}?retryWrites=true&w=majority`;
+//mongodb+srv://mongo-express-inprodi-admin:K5yRhevxomis3iEL@cluster0.8iuft.mongodb.net/express-inprodi?retryWrites=true&w=majority
+const uri = process.env.MONGODB_URI || `mongodb+srv://${usuario}:${password}@${host}/${dbName}?retryWrites=true&w=majority`;
 
 
 
