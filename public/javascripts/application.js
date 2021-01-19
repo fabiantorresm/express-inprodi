@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     initApp();
 
     function initApp() {
+        console.log('Loaded...');
         menuProfile.classList.add('hidden')
     }
 
