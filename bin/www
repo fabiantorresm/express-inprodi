@@ -5,19 +5,21 @@
  */
 
 const app   = require('../app');
+require('dotenv').config();
+const {port} =  require('../config/config');
 const debug = require('debug')('express-inprodi:server');
 const http  = require('http');
 
 const mongoose = require('mongoose');
 
-const usuario   = "mongo-express-inprodi-admin"
-const password  = "K5yRhevxomis3iEL"
+const db_user   = "mongo-express-inprodi-admin"
+const db_password  = "K5yRhevxomis3iEL"
 const dbName    = "express-inprodi"
-const host      = "cluster0.8iuft.mongodb.net"
+const db_host      = "cluster0.8iuft.mongodb.net"
 
-// mongodb+srv://mongo-express-inprodi-admin:<password>${password}/<dbname>?retryWrites=true&w=majority
+// mongodb+srv://mongo-express-inprodi-admin:<db_password>${db_password}/<dbname>?retryWrites=true&w=majority
 //mongodb+srv://mongo-express-inprodi-admin:K5yRhevxomis3iEL@cluster0.8iuft.mongodb.net/express-inprodi?retryWrites=true&w=majority
-const uri = process.env.MONGODB_URI || `mongodb+srv://${usuario}:${password}@${host}/${dbName}?retryWrites=true&w=majority`;
+const uri = process.env.MONGODB_URI || `mongodb+srv://${db_user}:${db_password}@${db_host}/${dbName}?retryWrites=true&w=majority`;
 
 
 
@@ -25,8 +27,8 @@ const uri = process.env.MONGODB_URI || `mongodb+srv://${usuario}:${password}@${h
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '5000');
-app.set('port', port);
+// const port = normalizePort(port);
+app.set('port', normalizePort(port));
 
 /**
  * Create HTTP server.
@@ -41,7 +43,7 @@ const server = http.createServer(app);
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=> {
     console.log('Database connected...')
-    server.listen(port);
+    server.listen(normalizePort(port));
     server.on('error', onError);
     server.on('listening', onListening);
   }) 
