@@ -1,6 +1,6 @@
 {
   "name": "express-inprodi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node index.js",
@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-validator": "^6.9.2",
+    "google-auth-library": "^7.0.2",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",

@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
+
 const { validateFields } = require('../app/middlewares/validateFields');
-const { getUsers, createUser, sessionUser, refreshToken } = require('../app/controllers/api/usersController');
+const { getUsers, createUser, sessionUser, refreshToken, googleAuth } = require('../app/controllers/api/usersController');
 const { validateJwt } = require('../app/middlewares/validateJwt');
 
 const router = Router();
-
 
 router.get(
   '/',
@@ -15,8 +15,7 @@ router.get(
 
 router.post(
   '/new', 
-  [ // middlewares
-    // check('name', 'El nombre es obligatorio').not().isEmpty(),
+  [
     check('email', 'El email es obligatorio').isEmail(),
     check('password', 'El password debe de ser de 6 caracteres').isLength({ min: 6 }),
     validateFields
@@ -35,6 +34,8 @@ router.post(
 );
 
 
+
+
 // router.post(
 //     '/signup',
 //     [
@@ -46,5 +47,7 @@ router.post(
 // );
 
 router.get('/refresh', validateJwt , refreshToken );
+
+router.post('/google', googleAuth);
 
 module.exports = router;

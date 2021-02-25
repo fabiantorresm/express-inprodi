@@ -5,7 +5,7 @@ const { getTodos, createTodo } = require('../app/controllers/api/todosController
 const { validateJwt } = require('../app/middlewares/validateJwt');
 
 const router = Router();
-// router.use( validateJwt );
+router.use( validateJwt );
 
 router.get(
   '/',

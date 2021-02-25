@@ -1,7 +1,10 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
+
+
 const User = require('../../models/user');
 const { generateJWT } = require('../../helpers/jwt');
+const { validateIdTokenGoogle } = require('../../middlewares/validateIdtokenGoogle');
 
 const getUsers = async(req, res = response)=> {
     // try {
@@ -79,12 +82,13 @@ const sessionUser = async(req, res = response ) => {
 
         // Generar JWT
         const token = await generateJWT( user.id, user.name );
-        res.json({
-            ok: true,
-            uid: user.id,
-            name: user.name,
-            token
-        })
+        // res.json({
+        //     ok: true,
+        //     uid: user.id,
+        //     name: user.name,
+        //     token
+        // })
+        res.json({token});
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -103,4 +107,20 @@ const refreshToken = async (req, res = response ) => {
     })
 }
 
-module.exports = { getUsers, createUser, sessionUser, refreshToken }
+const googleAuth = async(req, res) => {
+    const token = req.body.token;
+    if (!token) {
+        return res.json({ok: false, message: 'No se recibieron los datos necesarios.'});
+    }
+    const user = await validateIdTokenGoogle(token);
+    if (!user) {
+        return res.json({ok: false, message: 'No se encontró un usuario.'});
+    }
+
+    res.json({
+        message: 'Estás en Google',
+        user
+    });
+}
+
+module.exports = { getUsers, createUser, sessionUser, refreshToken, googleAuth }
