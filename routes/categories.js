@@ -13,7 +13,7 @@ router.post(
   '/new', 
   [ // middlewares
     check('name', 'El campo name es obligatorio').not().isEmpty(),
-    // check('descriptio', 'El user es obligatorio').not().isEmpty(),
+    check('description', 'El user es obligatorio').not().isEmpty(),
     validateFields
   ],
   createCategory

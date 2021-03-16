@@ -1,0 +1,20 @@
+<div class="row d-flex justify-content-center align-items-center bg-primary rounded animate__pulse" style="height:75vh">
+	<div class="col-md-6">
+		<form action="../users/form" method="POST" class="form">
+			<legend class="text-white text-center mb-4">Inicio de sesión</legend>
+			<fieldset>
+				<div class="form-group">
+					<input type="email" name="email" id="user[email]" placeholder="Ingrese su correo"
+						class="form-control form-control-lg" required>
+				</div>
+				<div class="form-group">
+					<input type="password" name="password" id="user[password]" placeholder="Ingrese su clave privada"
+						class="form-control form-control-lg" required>
+				</div>
+				<div class="form-group mt-2">
+					<input type="submit" class="btn btn-lg btn-success" value="Iniciar sesión">
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

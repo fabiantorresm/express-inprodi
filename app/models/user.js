@@ -10,7 +10,16 @@ const User = mongoose.Schema({
         required: true,
         unique: true
     },
+    customerId: {
+        type: String,
+        required: true,
+        unique: true
+    },
     password: {
+        type: String,
+        required: true
+    },
+    platform: {
         type: String,
         required: true
     },

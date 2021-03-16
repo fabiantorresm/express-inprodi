@@ -8,43 +8,64 @@ const { validateJwt } = require('../app/middlewares/validateJwt');
 const router = Router();
 
 router.get(
-  '/',
-  validateJwt,
-  getUsers 
+	'/',
+	// validateJwt,
+	getUsers 
+);
+
+//RUTA PARA PRUEBA CON FORMDATA
+router.post('/', (req, res) => {
+	const { email, password } = req.body;
+	console.log(req.body)
+	res.json({
+		message: `Hola: ${email}`
+	});
+});
+
+router.get('/form', (req, res) => {
+	res.render('users/index');
+});
+
+router.post('/form', (req, res) => {
+	const {email} = req.body;
+	res.json({response: req.body});
+});
+
+
+
+
+router.post(
+	'/new', 
+	[
+		check('email', 'El correo es obligatorio').isEmail(),
+		check('password', 'El password debe de ser de 6 caracteres').isLength({ min: 6 }),
+		validateFields
+	],
+	createUser 
 );
 
 router.post(
-  '/new', 
-  [
-    check('email', 'El email es obligatorio').isEmail(),
-    check('password', 'El password debe de ser de 6 caracteres').isLength({ min: 6 }),
-    validateFields
-  ],
-  createUser 
+	'/signin',
+	[
+		check('email', 'El correo es obligatorio').isEmail(),
+		check('password', 'La contraseña debe de ser de 6 caracteres').isLength({ min: 6 }),
+		validateFields
+	],
+	sessionUser 
 );
+
+
+
 
 router.post(
-    '/signin',
-    [
-        check('email', 'El correo es obligatorio').isEmail(),
-        check('password', 'La contraseña debe de ser de 6 caracteres').isLength({ min: 6 }),
-        validateFields
-    ],
-    sessionUser 
+	'/signup',
+	[
+		check('email', 'El correo es obligatorio').isEmail(),
+		check('password', 'La contraseña debe de ser de 6 caracteres').isLength({ min: 6 }),
+		validateFields
+	],
+	sessionUser 
 );
-
-
-
-
-// router.post(
-//     '/signup',
-//     [
-//         check('email', 'El correo es obligatorio').isEmail(),
-//         check('password', 'La contraseña debe de ser de 6 caracteres').isLength({ min: 6 }),
-//         validateFields
-//     ],
-//     sessionUser 
-// );
 
 router.get('/refresh', validateJwt , refreshToken );
 
